@@ -53,7 +53,13 @@ class PtexSeparableFilter : public PtexFilter, public Ptex
     PtexSeparableFilter(PtexTexture* tx, const PtexFilter::Options& opts ) :
 	_tx(tx), _options(opts), _result(0), _weight(0), 
 	_firstChanOffset(0), _nchan(0), _ntxchan(0),
-	_dt((DataType)0), _uMode(tx->uBorderMode()), _vMode(tx->vBorderMode()) {}
+	_dt((DataType)0), _uMode(tx->uBorderMode()), _vMode(tx->vBorderMode())
+    {
+        // if caller was compiled with older version of API, set default for new opts
+        if (_options.__structSize < (char*)&_options.noedgeblend - (char*)&_options) {
+            _options.noedgeblend = 0;
+        }
+    }
     virtual ~PtexSeparableFilter() {}
 
     virtual void buildKernel(PtexSeparableKernel& k, float u, float v, float uw, float vw,

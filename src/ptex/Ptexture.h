@@ -881,11 +881,12 @@ class PtexFilter {
 	FilterType filter;	///< Filter type.
 	bool lerp;		///< Interpolate between mipmap levels.
 	float sharpness;	///< Filter sharpness, 0..1 (for general bi-cubic filter only).
+        bool noedgeblend;       ///< Disable cross-face filtering.  Useful for debugging or rendering on polys.
 
 	/// Constructor - sets defaults
-	Options(FilterType filter=f_box, bool lerp=0, float sharpness=0) :
+	Options(FilterType filter=f_box, bool lerp=0, float sharpness=0, bool noedgeblend=0) :
 	    __structSize(sizeof(Options)),
-	    filter(filter), lerp(lerp), sharpness(sharpness) {}
+	    filter(filter), lerp(lerp), sharpness(sharpness), noedgeblend(noedgeblend) {}
     };
 
     /* Construct a filter for the given texture.
